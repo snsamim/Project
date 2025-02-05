@@ -1,5 +1,3 @@
-package Hotel_Management_System;
-
 // Abstract Room class using inheritance
 abstract class Room {
     private int roomNumber;

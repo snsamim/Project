@@ -1,5 +1,3 @@
-package Hotel_Management_System;
-
 import java.time.temporal.ChronoUnit;
 
 class Billing {

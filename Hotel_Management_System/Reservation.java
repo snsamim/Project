@@ -1,4 +1,3 @@
-package Hotel_Management_System;
 import java.time.LocalDate;
 
 class Reservation {
