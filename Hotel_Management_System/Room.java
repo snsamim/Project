@@ -31,6 +31,7 @@ abstract class Room {
         }
     }
 
+    
     static class DeluxeRoom extends Room {
         public DeluxeRoom(int roomNumber, double pricePerDay) {
             super(roomNumber, "Deluxe", pricePerDay);
