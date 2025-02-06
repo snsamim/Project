@@ -106,4 +106,37 @@ public class HotelManagementSystem {
         }
         System.out.println("======================");
     }
+
+    private static void bookRoom() {
+        System.out.print("Enter customer ID: ");
+        int customerId = scanner.nextInt();
+        Customer customer = hotel.findCustomerById(customerId);
+        if (customer == null) {
+            System.out.println("Customer not found!");
+            return;
+        }
+
+        System.out.print("Enter check-in date (yyyy-mm-dd): ");
+        LocalDate checkIn = LocalDate.parse(scanner.next());
+        System.out.print("Enter check-out date (yyyy-mm-dd): ");
+        LocalDate checkOut = LocalDate.parse(scanner.next());
+        scanner.nextLine();
+
+        List<Room> availableRooms = hotel.getAvailableRooms(checkIn, checkOut);
+        System.out.println("Available Rooms:");
+        for (Room room : availableRooms) {
+            System.out.printf("%d - %s ($%.2f/day)\n",
+                    room.getRoomNumber(), room.getType(), room.getPricePerDay());
+        }
+
+        System.out.print("Enter room number to book: ");
+        int roomNumber = scanner.nextInt();
+        scanner.nextLine();
+
+        if (hotel.bookRoom(customer, roomNumber, checkIn, checkOut)) {
+            System.out.println("Booking successful!");
+        } else {
+            System.out.println("Booking failed! Room might be unavailable.");
+        }
+    }
 }
