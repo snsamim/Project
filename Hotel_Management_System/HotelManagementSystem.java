@@ -139,4 +139,62 @@ public class HotelManagementSystem {
             System.out.println("Booking failed! Room might be unavailable.");
         }
     }
+
+
+    private static void cancelReservation() {
+        System.out.print("Enter customer ID: ");
+        int customerId = scanner.nextInt();
+        Customer customer = hotel.findCustomerById(customerId);
+        if (customer == null) {
+            System.out.println("Customer not found!");
+            return;
+        }
+
+        List<Reservation> bookings = customer.getBookingHistory();
+        System.out.println("Active Bookings:");
+        for (int i = 0; i < bookings.size(); i++) {
+            Reservation r = bookings.get(i);
+            System.out.printf("%d. Room %d (%s) %s to %s\n",
+                    i+1, r.getRoom().getRoomNumber(), r.getRoom().getType(),
+                    r.getCheckInDate(), r.getCheckOutDate());
+        }
+
+        System.out.print("Enter booking number to cancel: ");
+        int bookingNumber = scanner.nextInt();
+        scanner.nextLine();
+
+        if (bookingNumber > 0 && bookingNumber <= bookings.size()) {
+            Reservation toCancel = bookings.get(bookingNumber-1);
+            if (hotel.cancelReservation(toCancel)) {
+                System.out.println("Reservation cancelled successfully!");
+            } else {
+                System.out.println("Cancellation failed!");
+            }
+        } else {
+            System.out.println("Invalid booking number!");
+        }
+    }
+
+    private static void checkAvailability() {
+        System.out.print("Enter check-in date (yyyy-mm-dd): ");
+        LocalDate checkIn = LocalDate.parse(scanner.next());
+        System.out.print("Enter check-out date (yyyy-mm-dd): ");
+        LocalDate checkOut = LocalDate.parse(scanner.next());
+        scanner.nextLine();
+
+        List<Room> availableRooms = hotel.getAvailableRooms(checkIn, checkOut);
+        System.out.println("Available Rooms:");
+        for (Room room : availableRooms) {
+            System.out.printf("Room %d - %s ($%.2f/day)\n",
+                    room.getRoomNumber(), room.getType(), room.getPricePerDay());
+        }
+    }
+
+    private static void generateBill() {
+        
+    }
+
+    private static void viewBookingHistory() {
+        
+    }   
 }
