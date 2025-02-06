@@ -191,6 +191,37 @@ public class HotelManagementSystem {
     }
 
     private static void generateBill() {
+        System.out.print("Enter customer ID: ");
+        int customerId = scanner.nextInt();
+        Customer customer = hotel.findCustomerById(customerId);
+        if (customer == null) {
+            System.out.println("Customer not found!");
+            return;
+        }
+
+        List<Reservation> bookings = customer.getBookingHistory();
+        if (bookings.isEmpty()) {
+            System.out.println("No bookings found for this customer!");
+            return;
+        }
+
+        System.out.println("Select booking to generate bill:");
+        for (int i = 0; i < bookings.size(); i++) {
+            Reservation r = bookings.get(i);
+            System.out.printf("%d. Room %d (%s) %s to %s\n",
+                    i+1, r.getRoom().getRoomNumber(), r.getRoom().getType(),
+                    r.getCheckInDate(), r.getCheckOutDate());
+        }
+
+        System.out.print("Enter booking number: ");
+        int bookingNumber = scanner.nextInt();
+        scanner.nextLine();
+
+        if (bookingNumber > 0 && bookingNumber <= bookings.size()) {
+            Billing.generateBill(bookings.get(bookingNumber-1));
+        } else {
+            System.out.println("Invalid booking number!");
+        }
         
     }
 
