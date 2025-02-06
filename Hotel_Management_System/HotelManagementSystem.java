@@ -78,3 +78,32 @@ public class HotelManagementSystem {
             System.out.println("Error: Room number " + number + " already exists!");
         }
     }
+
+
+    private static void addCustomer() {
+        System.out.print("Enter customer name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter contact info: ");
+        String contact = scanner.nextLine();
+
+        Customer newCustomer = hotel.addCustomer(name, contact);
+        System.out.println("Customer added successfully!");
+        System.out.println("Your customer ID is: " + newCustomer.getId());
+    }
+
+    private static void viewAllCustomers() {
+        List<Customer> customers = hotel.getAllCustomers();
+        if (customers.isEmpty()) {
+            System.out.println("\nNo customers found!");
+            return;
+        }
+
+        System.out.println("\n=== All Customers ===");
+        System.out.printf("%-8s %-20s %-15s\n", "ID", "Name", "Contact Info");
+        for (Customer customer : customers) {
+            System.out.printf("%-8d %-20s %-15s\n",
+                    customer.getId(), customer.getName(), customer.getContactInfo());
+        }
+        System.out.println("======================");
+    }
+}
