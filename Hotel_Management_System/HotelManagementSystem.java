@@ -6,7 +6,7 @@ public class HotelManagementSystem {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        
+        initializeSampleData();
 
         while (true) {
             System.out.println("\nHotel Management System");
@@ -56,4 +56,25 @@ public class HotelManagementSystem {
         }
     }
 
-   
+    private static void initializeSampleData() {
+        hotel.addRoom(new Room.DeluxeRoom(101, 200));
+        hotel.addRoom(new Room.StandardRoom(201, 100));
+    }
+
+    private static void addRoom() {
+        System.out.print("Enter room number: ");
+        int number = scanner.nextInt();
+        System.out.print("Enter room type (1. Deluxe 2. Standard): ");
+        int typeChoice = scanner.nextInt();
+        System.out.print("Enter daily rate: ");
+        double rate = scanner.nextDouble();
+        scanner.nextLine();
+
+        Room room = typeChoice == 1 ? new Room.DeluxeRoom(number, rate) : new Room.StandardRoom(number, rate);
+
+        if (hotel.addRoom(room)) {
+            System.out.println("Room added successfully!");
+        } else {
+            System.out.println("Error: Room number " + number + " already exists!");
+        }
+    }
