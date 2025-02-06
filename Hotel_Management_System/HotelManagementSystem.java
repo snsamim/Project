@@ -226,6 +226,21 @@ public class HotelManagementSystem {
     }
 
     private static void viewBookingHistory() {
-        
+        System.out.print("Enter customer ID: ");
+        int customerId = scanner.nextInt();
+        Customer customer = hotel.findCustomerById(customerId);
+        if (customer == null) {
+            System.out.println("Customer not found!");
+            return;
+        }
+
+        List<Reservation> bookings = customer.getBookingHistory();
+        System.out.println("\nBooking History for " + customer.getName());
+        for (Reservation r : bookings) {
+            System.out.printf("- Room %d (%s) from %s to %s\n",
+                    r.getRoom().getRoomNumber(), r.getRoom().getType(),
+                    r.getCheckInDate(), r.getCheckOutDate());
+        }
+        System.out.println();
     }   
 }
